@@ -1,0 +1,130 @@
+.watchlist-container {
+  padding: 100px 2rem 2rem;
+}
+
+.watchlist-container h2 {
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.movie-card {
+  background: rgba(32, 32, 32, 0.8);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.movie-card:hover img {
+  opacity: 0.7;
+}
+
+.movie-info {
+  padding: 1rem;
+}
+
+.movie-info h3 {
+  color: #fff;
+  font-size: 1rem;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-rating {
+  display: flex;
+  align-items: center;
+  color: #ffd700;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.movie-rating span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.remove-button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #2b9aef;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.remove-button:hover {
+  background: #2e79e1;
+}
+
+.empty-list {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+}
+
+.empty-list h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.empty-list p {
+  margin-bottom: 2rem;
+  color: #aaa;
+}
+
+.browse-link {
+  padding: 0.8rem 2rem;
+  background: #4c4a4a;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.browse-link:hover {
+  background: ghostwhite;
+}
+
+@media (max-width: 768px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .movie-card img {
+    height: 225px;
+  }
+
+  .empty-list h2 {
+    font-size: 1.5rem;
+  }
+} 

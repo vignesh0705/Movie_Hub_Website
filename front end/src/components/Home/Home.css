@@ -1,0 +1,356 @@
+.home {
+  min-height: 100vh;
+  background: #141414;
+  color: #ffffff;
+  padding-top: 70px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.hero-section {
+  min-height: 80vh;
+  position: relative;
+  background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(20,20,20,0.95) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+  margin-bottom: 4rem;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(0deg, rgba(0,0,0,0.95) 0%, transparent 50%),
+    url('https://image.tmdb.org/t/p/original/8Y43POKjjKDGI9MH89NW0NAzzp8.jpg') center/cover no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, #888686 30%, #252424 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.hero-section p {
+  font-size: 1.5rem;
+  color: #cccccc;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 600px;
+}
+
+.browse-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.5rem;
+  background: #3d3b3c;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(199, 196, 196, 0.3);
+  margin: 0 auto;
+}
+
+.browse-button:hover {
+  background: #1f1f1f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(53, 53, 53, 0.4);
+}
+
+.browse-button:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 60vh;
+  }
+
+  .hero-section h1 {
+    font-size: 3rem;
+  }
+
+  .hero-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .browse-button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .browse-button {
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+  }
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.see-all {
+  color: #c2c0c0;
+  text-decoration: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.see-all:hover {
+  color: #545454;
+}
+
+.movie-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.movie-card-wrapper {
+  position: relative;
+  transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 150px;
+}
+
+.movie-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: #181818;
+  height: auto;
+}
+
+.movie-poster {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4/6;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-title {
+  padding: 8px 4px;
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: #e5e5e5;
+  font-size: 0.9rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 4px;
+}
+
+.action-btn.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+  background: #fff;
+  color: #000;
+}
+
+.action-btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.action-btn span {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.action-btn.play {
+  background: #fff;
+  color: #000;
+}
+
+.movie-rating {
+  color: #46d369;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 1200px) {
+  .movie-row {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.8rem;
+  }
+  
+  .movie-card-wrapper {
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-row {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.7rem;
+  }
+  
+  .movie-card-wrapper {
+    max-width: 120px;
+  }
+
+  .movie-info h3 {
+    font-size: 1rem;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .movie-title h3 {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-row {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .movie-card-wrapper {
+    max-width: 100px;
+  }
+
+  .movie-overlay {
+    padding: 1rem;
+  }
+
+  .movie-info h3 {
+    font-size: 0.9rem;
+  }
+
+  .action-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .movie-title {
+    padding: 6px 2px;
+  }
+  
+  .movie-title h3 {
+    font-size: 0.75rem;
+  }
+}
