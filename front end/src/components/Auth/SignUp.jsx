@@ -27,18 +27,40 @@ const SignUp = () => {
     }
 
     try {
+      console.log('Attempting to sign up with Render backend:', {
+        username: formData.username,
+        email: formData.email,
+        password: '********' // Don't log actual password
+      });
+
       // Call the signup API
-      await authService.signup({
+      const response = await authService.signup({
         username: formData.username,
         email: formData.email,
         password: formData.password
       });
 
+      console.log('Signup successful:', response);
+
+      // Show success message
+      alert('Signup successful! Please log in with your new account.');
+
       // Redirect to login page after successful signup
       navigate('/login');
     } catch (err) {
       console.error('Signup error:', err);
-      setError(err.message || 'Signup failed. Please try again.');
+
+      // Provide more specific error messages based on the error
+      if (err.message && err.message.includes('Network')) {
+        setError('Network error: Unable to reach the server. Please check your internet connection or try again later.');
+        console.error('Network error details:', err);
+      } else if (err.message && err.message.includes('already exists')) {
+        setError('This email is already registered. Please use a different email or try logging in.');
+      } else if (err.message && err.message.includes('status code 405')) {
+        setError('The signup service is currently unavailable. Please try again later.');
+      } else {
+        setError(err.message || 'Signup failed. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }

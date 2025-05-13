@@ -19,13 +19,18 @@ const Login = () => {
 
     try {
       if (formData.email && formData.password) {
+        console.log('Attempting to log in with Render backend:', {
+          email: formData.email,
+          password: '********' // Don't log actual password
+        });
+
         const response = await authService.login(formData);
 
         // Store user data in localStorage
         localStorage.setItem('isLoggedIn', 'true');
 
         // Log the response to see what we're getting
-        console.log('Login response:', response);
+        console.log('Login response from Render backend:', response);
 
         // Store complete user data
         localStorage.setItem('user', JSON.stringify({
@@ -36,6 +41,9 @@ const Login = () => {
 
         // Log what we stored
         console.log('Stored user data:', JSON.parse(localStorage.getItem('user')));
+
+        // Show success message
+        console.log('Login successful! Redirecting to home page...');
 
         // Navigate to home and refresh to ensure contexts are reinitialized
         navigate('/home');
@@ -48,7 +56,18 @@ const Login = () => {
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError(err.message || 'Login failed. Please try again.');
+
+      // Provide more specific error messages based on the error
+      if (err.message && err.message.includes('Network')) {
+        setError('Network error: Unable to reach the server. Please check your internet connection or try again later.');
+        console.error('Network error details:', err);
+      } else if (err.message && err.message.includes('Invalid credentials')) {
+        setError('Invalid email or password. Please try again.');
+      } else if (err.message && err.message.includes('status code 405')) {
+        setError('The login service is currently unavailable. Please try again later.');
+      } else {
+        setError(err.message || 'Login failed. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
