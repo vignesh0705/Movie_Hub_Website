@@ -4,7 +4,8 @@ A full-stack movie website for browsing Tamil movies, with features like watchli
 
 ## Live Demo
 
-Frontend: [https://movie-website-theta-swart.vercel.app](https://movie-website-theta-swart.vercel.app)
+Frontend: [https://movie-hub-website.vercel.app](https://movie-hub-website.vercel.app)
+Backend: [https://movie-hub-website.onrender.com](https://movie-hub-website.onrender.com) 
 
 ## Features
 
