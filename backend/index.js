@@ -29,7 +29,6 @@ app.post("/signup", async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
-        // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
@@ -99,7 +98,6 @@ app.post("/addToWatchlist", async (req, res) => {
         const { email, movie } = req.body;
         console.log("Adding to watchlist:", { email, movie });
 
-        // Find the user by email
         const user = await User.findOne({ email });
         console.log("User found:", user ? user.email : "No user");
 
@@ -107,7 +105,6 @@ app.post("/addToWatchlist", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Ensure movie has all required properties
         const movieToAdd = {
             id: parseInt(movie.id),
             title: movie.title,
@@ -124,15 +121,11 @@ app.post("/addToWatchlist", async (req, res) => {
             watchlistLength: user.watchlist ? user.watchlist.length : 0
         });
 
-        // Use direct MongoDB update with $addToSet to avoid duplicates
         const result = await User.findByIdAndUpdate(
             user._id,
             { $addToSet: { watchlist: movieToAdd } },
             { new: true }
         );
-
-        console.log("=== DATABASE UPDATE SUCCESSFUL ===");
-        console.log("MOVIE ADDED TO WATCHLIST IN DATABASE");
         console.log("Movie details:", movieToAdd);
         console.log("User email:", user.email);
         console.log("Updated watchlist length in database:", result.watchlist.length);
@@ -161,7 +154,6 @@ app.post("/removeFromWatchlist", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Ensure watchlist is initialized
         if (!user.watchlist) {
             user.watchlist = [];
             return res.status(200).json({ message: "Watchlist is empty" });
@@ -169,11 +161,7 @@ app.post("/removeFromWatchlist", async (req, res) => {
 
         console.log("Current watchlist length:", user.watchlist.length);
         console.log("Movie ID to remove:", movieId);
-
-        // Convert movieId to number if it's a string
         const movieIdNum = parseInt(movieId);
-
-        // Use findByIdAndUpdate for atomic operation and to get the updated document
         const result = await User.findByIdAndUpdate(
             user._id,
             { $pull: { watchlist: { id: movieIdNum } } },
@@ -215,8 +203,6 @@ app.post("/addToFavorites", async (req, res) => {
     try {
         const { email, movie } = req.body;
         console.log("Adding to favorites:", { email, movie });
-
-        // Find the user by email
         const user = await User.findOne({ email });
         console.log("User found:", user ? user.email : "No user");
 
@@ -224,7 +210,6 @@ app.post("/addToFavorites", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Ensure movie has all required properties
         const movieToAdd = {
             id: parseInt(movie.id),
             title: movie.title,
@@ -241,7 +226,6 @@ app.post("/addToFavorites", async (req, res) => {
             favoritesLength: user.favorites ? user.favorites.length : 0
         });
 
-        // Use direct MongoDB update with $addToSet to avoid duplicates
         const result = await User.findByIdAndUpdate(
             user._id,
             { $addToSet: { favorites: movieToAdd } },
@@ -274,7 +258,6 @@ app.post("/removeFromFavorites", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Ensure favorites is initialized
         if (!user.favorites) {
             user.favorites = [];
             return res.status(200).json({ message: "Favorites is empty" });
@@ -282,11 +265,7 @@ app.post("/removeFromFavorites", async (req, res) => {
 
         console.log("Current favorites length:", user.favorites.length);
         console.log("Movie ID to remove:", movieId);
-
-        // Convert movieId to number if it's a string
         const movieIdNum = parseInt(movieId);
-
-        // Use findByIdAndUpdate for atomic operation and to get the updated document
         const result = await User.findByIdAndUpdate(
             user._id,
             { $pull: { favorites: { id: movieIdNum } } },
@@ -307,19 +286,14 @@ app.post("/removeFromFavorites", async (req, res) => {
     }
 });
 
-// Test endpoint to add a test movie to watchlist
 app.get("/addTestMovie", async (req, res) => {
     try {
         const { email } = req.query;
         console.log("Adding test movie for user:", email);
-
-        // Find the user
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
-        // Create a test movie
         const testMovie = {
             id: 12345,
             title: "Test Movie",
@@ -328,11 +302,6 @@ app.get("/addTestMovie", async (req, res) => {
             release_date: "2023-01-01",
             vote_average: 8.5
         };
-
-        console.log("Test movie to add:", testMovie);
-        console.log("User before update:", user);
-
-        // Use direct MongoDB update
         await User.updateOne(
             { _id: user._id },
             { $addToSet: { watchlist: testMovie } }
