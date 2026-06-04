@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useWatchlist } from '../../context/WatchlistContext';
 import './Home.css';
@@ -161,14 +161,6 @@ const MovieSection = ({ title, movies, seeAllLink }) => {
                         <button
                           className={`action-btn ${watchlist.some(item => item.id === movie.id) ? 'active' : ''}`}
                           onClick={(e) => handleWatchlist(movie, e)}
-                          style={{
-                            backgroundColor: watchlist.some(item => item.id === movie.id) ? '#4CAF50' : '#e50914',
-                            color: 'white',
-                            fontWeight: 'bold',
-                            padding: '8px',
-                            borderRadius: '50%',
-                            cursor: 'pointer'
-                          }}
                         >
                           <span>{watchlist.some(item => item.id === movie.id) ? '✓' : '+'}</span>
                         </button>

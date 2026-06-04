@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useWatchlistContext } from '../../context/WatchlistContext';
 import './Watchlist.css';
@@ -41,9 +40,9 @@ const Watchlist = () => {
   return (
     <div className="watchlist-container">
       <h2>My Watchlist</h2>
-      <div className="movie-grid">
+      <div className="library-movie-grid">
         {watchlist.map(movie => (
-          <div key={movie.id} className="movie-card">
+          <div key={movie.id} className="library-movie-card">
             <Link to={`/movie/${movie.id}`}>
               <img
                 src={movie.poster_path
@@ -53,9 +52,9 @@ const Watchlist = () => {
                 alt={movie.title}
               />
             </Link>
-            <div className="movie-info">
+            <div className="library-movie-info">
               <h3>{movie.title}</h3>
-              <div className="movie-rating">
+              <div className="library-movie-rating">
                 <span>⭐ {movie.vote_average.toFixed(1)}</span>
               </div>
               <button

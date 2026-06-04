@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services/api';
 import './Auth.css';
@@ -74,21 +74,30 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
+    <main className="auth-container">
+      <section className="auth-copy">
+        <p>Unlimited movie nights</p>
+        <h1>Stream Tamil cinema and build your personal library.</h1>
+      </section>
+
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h2>Login to MovieHub</h2>
+        <h2>Sign in</h2>
         {error && <div className="error-message">{error}</div>}
         <div className="form-group">
+          <label htmlFor="login-email">Email</label>
           <input
+            id="login-email"
             type="email"
-            placeholder="Email"
+            placeholder="name@example.com"
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
             required
           />
         </div>
         <div className="form-group">
+          <label htmlFor="login-password">Password</label>
           <input
+            id="login-password"
             type="password"
             placeholder="Password"
             value={formData.password}
@@ -100,10 +109,10 @@ const Login = () => {
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
         <p className="auth-switch">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+          New to MovieHub? <Link to="/signup">Create an account</Link>
         </p>
       </form>
-    </div>
+    </main>
   );
 };
 

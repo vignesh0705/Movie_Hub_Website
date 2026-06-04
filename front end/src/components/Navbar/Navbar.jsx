@@ -1,12 +1,16 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useWatchlist } from '../../context/WatchlistContext';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { watchlistCount } = useWatchlist();
   const navigate = useNavigate();
+  const location = useLocation();
   const isAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const hideNavbar = ['/login', '/signup'].includes(location.pathname);
+
+  if (hideNavbar) {
+    return null;
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
@@ -21,21 +25,25 @@ const Navbar = () => {
         
         {isAuthenticated && (
           <div className="nav-center-links">
-            <Link to="/home" className="nav-link">Home</Link>
-            <Link to="/search" className="nav-link">Search</Link>
-            <Link to="/watchlist" className="nav-link">
+            <NavLink to="/home" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink>
+            <NavLink to="/search" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Search</NavLink>
+            <NavLink to="/watchlist" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
               Watchlist
-              {/* {watchlistCount > 0 && (
-                <span className="watchlist-counter">{watchlistCount}</span>
-              )} */}
-            </Link>
-            <Link to="/favorites" className="nav-link">Favorites</Link>
+            </NavLink>
+            <NavLink to="/favorites" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Favorites</NavLink>
+            <NavLink to="/profile" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Profile</NavLink>
           </div>
         )}
 
         <div className="nav-auth-buttons">
           {isAuthenticated ? (
-            <button onClick={handleLogout} className="nav-auth-link">Logout</button>
+            <>
+              <Link to="/profile" className="nav-profile-link">
+                <span className="nav-avatar">{(user.name || user.email || 'U').charAt(0).toUpperCase()}</span>
+                <span className="nav-profile-name">{user.name || 'Profile'}</span>
+              </Link>
+              <button onClick={handleLogout} className="nav-auth-link">Logout</button>
+            </>
           ) : (
             <>
               <Link to="/login" className="nav-auth-link">Login</Link>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { MovieProvider } from './context/MovieContext';
 import { WatchlistProvider } from './context/WatchlistContext';
@@ -10,6 +9,7 @@ import Favorites from './components/Favorites/Favorites';
 import MovieDetail from './components/MovieDetail/MovieDetail';
 import Login from './components/Auth/Login';
 import SignUp from './components/Auth/SignUp';
+import Profile from './components/Profile/Profile';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -50,6 +50,11 @@ function App() {
               <Route path="/favorites" element={
                 <ProtectedRoute>
                   <Favorites />
+                </ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               } />
               

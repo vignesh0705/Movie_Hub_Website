@@ -1,0 +1,13 @@
+[31mfailed to load config from D:\Full stack project\movie website\front end\vite.config.js[39m
+[31merror when starting dev server:
+Error: spawn EPERM
+    at ChildProcess.spawn (node:internal/child_process:420:11)
+    at Object.spawn (node:child_process:753:9)
+    at ensureServiceIsRunning (D:\Full stack project\movie website\front end\node_modules\esbuild\lib\main.js:1981:29)
+    at build (D:\Full stack project\movie website\front end\node_modules\esbuild\lib\main.js:1879:26)
+    at bundleConfigFile (file:///D:/Full%20stack%20project/movie%20website/front%20end/node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:55247:24)
+    at async bundleAndLoadConfigFile (file:///D:/Full%20stack%20project/movie%20website/front%20end/node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:55231:19)
+    at async loadConfigFromFile (file:///D:/Full%20stack%20project/movie%20website/front%20end/node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:55194:44)
+    at async resolveConfig (file:///D:/Full%20stack%20project/movie%20website/front%20end/node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:54702:24)
+    at async _createServer (file:///D:/Full%20stack%20project/movie%20website/front%20end/node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:44689:18)
+    at async CAC.<anonymous> (file:///D:/Full%20stack%20project/movie%20website/front%20end/node_modules/vite/dist/node/cli.js:750:20)[39m

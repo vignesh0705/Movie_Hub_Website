@@ -100,16 +100,23 @@ export const authService = {
   },
 };
 
+export const userService = {
+  getProfile: async (email) => {
+    try {
+      const response = await api.get(`/checkUser?email=${encodeURIComponent(email)}`);
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Network error');
+    }
+  },
+};
+
 // Watchlist services
 export const watchlistService = {
   addToWatchlist: async (email, movie) => {
     try {
       console.log('API SERVICE - Adding to watchlist - Email:', email);
       console.log('API SERVICE - Adding to watchlist - Movie:', movie);
-      const email ={
-        ...email,
-        id: parseInt(email)
-      };
       const movieToAdd = {
         ...movie,
         id: parseInt(movie.id)
@@ -118,7 +125,7 @@ export const watchlistService = {
       console.log('API SERVICE - Sending request to:', '/addToWatchlist');
       console.log('API SERVICE - Request payload:', { email, movie: movieToAdd });
 
-      const response = await api.post('/addToWatchlist', { email:email, movie: movieToAdd });
+      const response = await api.post('/addToWatchlist', { email, movie: movieToAdd });
 
       console.log('=== API CALL SUCCESSFUL ===');
       console.log('API ENDPOINT: /addToWatchlist');

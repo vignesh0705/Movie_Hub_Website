@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { useMovieContext } from '../../context/MovieContext';
 import './Favorites.css';
@@ -20,9 +19,9 @@ const Favorites = () => {
   return (
     <div className="favorites-container">
       <h2>My Favorites</h2>
-      <div className="movie-grid">
+      <div className="library-movie-grid">
         {favorites.map(movie => (
-          <div key={movie.id} className="movie-card">
+          <div key={movie.id} className="library-movie-card">
             <Link to={`/movie/${movie.id}`}>
               <img 
                 src={movie.poster_path 
@@ -32,9 +31,9 @@ const Favorites = () => {
                 alt={movie.title}
               />
             </Link>
-            <div className="movie-info">
+            <div className="library-movie-info">
               <h3>{movie.title}</h3>
-              <div className="movie-rating">
+              <div className="library-movie-rating">
                 <span>⭐ {movie.vote_average.toFixed(1)}</span>
               </div>
               <button 

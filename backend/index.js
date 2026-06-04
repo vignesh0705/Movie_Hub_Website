@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const User = require("./models/user");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,16 +10,20 @@ const PORT = process.env.PORT || 5000;
 // MongoDB Connection
 const connectDB = async () => {
     try {
-        const mongoURI = process.env.MONGO_URI || 'mongodb+srv://vicky:vicky072005@cluster0.fzruktz.mongodb.net/';
+        const mongoURI = process.env.MONGO_URI;
+
+        if (!mongoURI) {
+            throw new Error("MONGO_URI is missing. Create backend/.env and add your MongoDB connection string.");
+        }
+
         await mongoose.connect(mongoURI);
         console.log("Connected to MongoDB");
     } catch (err) {
         console.error("Error connecting to MongoDB:", err.message);
+        console.error("Check that your Atlas Network Access IP whitelist includes your current IP, and that MONGO_URI is correct.");
         process.exit(1);
     }
 };
-
-connectDB();
 
 app.use(express.json());
 app.use(cors());
@@ -359,6 +363,8 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: "Something went wrong!" });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
 });

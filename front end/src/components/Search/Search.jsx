@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import './Search.css';
 
@@ -15,7 +15,7 @@ const Search = () => {
   const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
   // Language codes mapping
-  const languageCodes = {
+  const languageCodes = useMemo(() => ({
     'all': { code: '', name: 'All Languages' },
     'ta': { code: 'ta', name: 'Tamil' },
     'en': { code: 'en', name: 'English' },
@@ -25,7 +25,7 @@ const Search = () => {
     'kn': { code: 'kn', name: 'Kannada' },
     'ml': { code: 'ml', name: 'Malayalam' },
     'mr': { code: 'mr', name: 'Marathi' }
-  };
+  }), []);
 
   const filterAdultContent = (movies) => {
     return movies.filter(movie => {
@@ -88,7 +88,7 @@ const Search = () => {
 
     const debounceTimeout = setTimeout(searchMovies, 500);
     return () => clearTimeout(debounceTimeout);
-  }, [searchQuery, language]);
+  }, [searchQuery, language, languageCodes]);
 
   return (
     <div className="search-container">
@@ -130,7 +130,7 @@ const Search = () => {
 
       {!loading && !error && searchResults.length === 0 && searchQuery && (
         <div className="search-status">
-          <p>No {language !== 'all' ? languageCodes[language].name : ''} movies found matching "{searchQuery}"</p>
+          <p>No {language !== 'all' ? languageCodes[language].name : ''} movies found matching &quot;{searchQuery}&quot;</p>
         </div>
       )}
 
@@ -142,8 +142,8 @@ const Search = () => {
 
       <div className="search-results">
         {searchResults.map(movie => (
-          <Link to={`/movie/${movie.id}`} key={movie.id} className="movie-card">
-            <div className="movie-poster">
+          <Link to={`/movie/${movie.id}`} key={movie.id} className="search-movie-card">
+            <div className="search-movie-poster">
               <img 
                 src={movie.poster_path 
                   ? `${IMAGE_BASE_URL}/w500${movie.poster_path}`
@@ -158,9 +158,9 @@ const Search = () => {
                 <div className="movie-rating">⭐ {movie.vote_average?.toFixed(1) || 'N/A'}</div>
               </div>
             </div>
-            <div className="movie-info">
+            <div className="search-movie-info">
               <h3>{movie.title}</h3>
-              <div className="movie-meta">
+              <div className="search-movie-meta">
                 <span className="rating">⭐ {movie.vote_average?.toFixed(1) || 'N/A'}</span>
                 <span className="year">
                   {movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A'}

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useMovieContext } from '../../context/MovieContext';
+import { useWatchlist } from '../../context/WatchlistContext';
 import './MovieDetail.css';
 
 const MovieDetail = () => {
@@ -16,13 +17,12 @@ const MovieDetail = () => {
   const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
   const { 
-    addToWatchlist, 
-    removeFromWatchlist, 
     addToFavorites, 
     removeFromFavorites,
-    isInWatchlist,
     isInFavorites 
   } = useMovieContext();
+  const { watchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
+  const isMovieInWatchlist = watchlist.some(item => item.id === Number(id));
 
   const isMatureContent = (movieData) => {
     if (movieData.adult) return true;
@@ -154,14 +154,14 @@ const MovieDetail = () => {
               </div>
               <div className="action-buttons">
                 <button 
-                  className={`action-button ${isInWatchlist(movie.id) ? 'active' : ''}`}
+                  className={`action-button ${isMovieInWatchlist ? 'active' : ''}`}
                   onClick={() => {
-                    isInWatchlist(movie.id) 
+                    isMovieInWatchlist 
                       ? removeFromWatchlist(movie.id)
                       : addToWatchlist(movie);
                   }}
                 >
-                  {isInWatchlist(movie.id) ? '✓ In Watchlist' : '+ Add to Watchlist'}
+                  {isMovieInWatchlist ? '✓ In Watchlist' : '+ Add to Watchlist'}
                 </button>
                 <button 
                   className={`action-button ${isInFavorites(movie.id) ? 'active' : ''}`}

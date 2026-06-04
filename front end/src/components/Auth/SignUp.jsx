@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services/api';
 import './Auth.css';
@@ -42,9 +42,6 @@ const SignUp = () => {
 
       console.log('Signup successful:', response);
 
-      // Show success message
-      alert('Signup successful! Please log in with your new account.');
-
       // Redirect to login page after successful signup
       navigate('/login');
     } catch (err) {
@@ -67,50 +64,67 @@ const SignUp = () => {
   };
 
   return (
-    <div className="auth-container">
+    <main className="auth-container">
+      <section className="auth-copy">
+        <p>Start your watch party</p>
+        <h1>Create a MovieHub profile for favorites, watchlists, and trailers.</h1>
+      </section>
+
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h2>Sign Up</h2>
+        <h2>Create account</h2>
         {error && <div className="error-message">{error}</div>}
         <div className="form-group">
+          <label htmlFor="signup-username">Username</label>
           <input
+            id="signup-username"
             type="text"
             placeholder="Username"
             value={formData.username}
             onChange={(e) => setFormData({...formData, username: e.target.value})}
+            required
           />
         </div>
         <div className="form-group">
+          <label htmlFor="signup-email">Email</label>
           <input
+            id="signup-email"
             type="email"
-            placeholder="Email"
+            placeholder="name@example.com"
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
+            required
           />
         </div>
         <div className="form-group">
+          <label htmlFor="signup-password">Password</label>
           <input
+            id="signup-password"
             type="password"
             placeholder="Password"
             value={formData.password}
             onChange={(e) => setFormData({...formData, password: e.target.value})}
+            required
           />
         </div>
         <div className="form-group">
+          <label htmlFor="signup-confirm-password">Confirm Password</label>
           <input
+            id="signup-confirm-password"
             type="password"
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+            required
           />
         </div>
         <button type="submit" className="auth-button" disabled={isLoading}>
           {isLoading ? 'Signing up...' : 'Sign Up'}
         </button>
-        <p>
-          Already have an account? <Link to="/login">Login</Link>
+        <p className="auth-switch">
+          Already have an account? <Link to="/login">Sign in</Link>
         </p>
       </form>
-    </div>
+    </main>
   );
 };
 
