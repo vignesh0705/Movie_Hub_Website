@@ -100,21 +100,11 @@ const MovieSection = ({ title, movies, seeAllLink }) => {
 
         // Show success message
         alert(`${movie.title} added to watchlist!`);
-
-        // Refresh the page to update the UI
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
       } else {
         console.log('Attempting to remove from watchlist');
         await removeFromWatchlist(movie.id);
         console.log('Removed from watchlist');
         alert(`${movie.title} removed from watchlist!`);
-
-        // Refresh the page to update the UI
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
       }
     } catch (error) {
       console.error('Error handling watchlist:', error);
