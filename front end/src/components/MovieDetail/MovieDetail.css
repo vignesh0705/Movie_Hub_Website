@@ -86,6 +86,43 @@
   color: #ddd;
 }
 
+.trailer-section {
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-header h3 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.inline-trailer {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.inline-trailer iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.no-trailer {
+  color: #bbb;
+  line-height: 1.6;
+}
+
 .cast h3 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
@@ -168,10 +205,6 @@
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  opacity: 0;
-}
-
-.poster:hover .play-trailer {
   opacity: 1;
 }
 
@@ -230,6 +263,10 @@
   background: #141414;
   color: white;
   padding: 8px;
+}
+
+.inline-quality-selector {
+  flex: 0 0 auto;
 }
 
 .trailer-content {
@@ -308,8 +345,21 @@
   background: #e50914;
 }
 
+.trailer-action {
+  background: #e50914;
+}
+
+.trailer-action:hover {
+  background: #b80710;
+}
+
 @media (max-width: 768px) {
   .action-buttons {
+    flex-direction: column;
+  }
+
+  .section-header {
+    align-items: flex-start;
     flex-direction: column;
   }
 }

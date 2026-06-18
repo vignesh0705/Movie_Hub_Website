@@ -84,6 +84,9 @@ const MovieDetail = () => {
     return trailer ? trailer.key : null;
   };
 
+  const getTrailerEmbedUrl = (trailerKey, autoplay = false) => (
+    `https://www.youtube.com/embed/${trailerKey}?${autoplay ? 'autoplay=1&' : ''}vq=${videoQuality}&modestbranding=1&rel=0`
+  );
 
   const videoQualities = [
     { label: '4K', value: 'hd2160' },
@@ -153,6 +156,11 @@ const MovieDetail = () => {
                 ))}
               </div>
               <div className="action-buttons">
+                {trailerKey && (
+                  <button className="action-button trailer-action" onClick={handleTrailerClick}>
+                    ▶ Watch Trailer
+                  </button>
+                )}
                 <button 
                   className={`action-button ${isMovieInWatchlist ? 'active' : ''}`}
                   onClick={() => {
@@ -177,6 +185,38 @@ const MovieDetail = () => {
               <div className="overview">
                 <h3>Overview</h3>
                 <p>{movie.overview || 'No overview available.'}</p>
+              </div>
+              <div className="trailer-section">
+                <div className="section-header">
+                  <h3>Trailer</h3>
+                  {trailerKey && (
+                    <select 
+                      className="quality-selector inline-quality-selector"
+                      value={videoQuality}
+                      onChange={(e) => setVideoQuality(e.target.value)}
+                      aria-label="Trailer quality"
+                    >
+                      {videoQualities.map(quality => (
+                        <option key={quality.value} value={quality.value}>
+                          {quality.label}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+                {trailerKey ? (
+                  <div className="inline-trailer">
+                    <iframe
+                      src={getTrailerEmbedUrl(trailerKey)}
+                      title={`${movie.title} Trailer`}
+                      frameBorder="0"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                ) : (
+                  <p className="no-trailer">Trailer is not available for this movie.</p>
+                )}
               </div>
               <div className="cast">
                 <h3>Cast</h3>
@@ -228,8 +268,8 @@ const MovieDetail = () => {
               <button className="close-trailer" onClick={handleCloseTrailer}>×</button>
             </div>
             <iframe
-              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&vq=${videoQuality}&modestbranding=1&rel=0`}
-              title="Movie Trailer"
+              src={getTrailerEmbedUrl(trailerKey, true)}
+              title={`${movie.title} Trailer`}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
